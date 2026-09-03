@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build mcp-course-voice.html: the course page pointed at the cloned track.
+"""Build my-voice.html: the course page pointed at the cloned track.
 
-    python tools/make-voice-page.py                    # audio-qwen -> mcp-course-voice.html
-    python tools/make-voice-page.py --audio audio-clone --out mcp-course-chatterbox.html
+    python tools/make-voice-page.py                    # audio-qwen -> my-voice.html
+    python tools/make-voice-page.py --audio audio-clone --out chatterbox.html
 
-Reads mcp-course.html, swaps the audio manifest for one built from the real
+Reads index.html, swaps the audio manifest for one built from the real
 durations of the mp3s in the chosen directory, and writes a second page.
 The Kokoro page is never modified: both tracks stay playable side by side,
 which is the only way to compare them honestly.
@@ -27,7 +27,7 @@ def main():
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--audio", default="audio-qwen",
                     help="Directory holding the chapter mp3s. Default audio-qwen.")
-    ap.add_argument("--out", default="mcp-course-voice.html")
+    ap.add_argument("--out", default="my-voice.html")
     ap.add_argument("--voice", default="Anuj (Qwen3-TTS 0.6B clone)",
                     help="Shown in the player credit line.")
     ap.add_argument("--engine", default="Qwen3-TTS 0.6B",
@@ -39,7 +39,7 @@ def main():
     except ImportError:
         sys.exit("Needs soundfile:  pip install soundfile")
 
-    src = ROOT / "mcp-course.html"
+    src = ROOT / "index.html"
     dst = ROOT / args.out
     audio = ROOT / args.audio
 

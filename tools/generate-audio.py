@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Generate the narration audio for mcp-course.html.
+Generate the narration audio for index.html.
 
 Reads the plain-text scripts in narration/, renders them with Kokoro-82M
 (Apache-2.0, runs locally on CPU via onnxruntime), writes audio/chNN.mp3,
-and patches the resulting durations back into mcp-course.html.
+and patches the resulting durations back into index.html.
 
 Everything here is free and open source. Nothing is sent anywhere.
 
@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 NARRATION = ROOT / "narration"
 AUDIO = ROOT / "audio-kokoro"
 MODELS = ROOT / "models"
-HTML = ROOT / "mcp-course.html"
+HTML = ROOT / "index.html"
 
 MODEL_BASE = ("https://github.com/thewh1teagle/kokoro-onnx/releases/download/"
               "model-files-v1.0")
@@ -549,11 +549,11 @@ def patch_html(tracks, voice):
     any audio is fetched. Inlined rather than fetched, so the page still works
     when opened straight off disk as a file:// URL."""
     if not HTML.exists():
-        print("! mcp-course.html not found, skipping manifest patch")
+        print("! index.html not found, skipping manifest patch")
         return
     html = HTML.read_text(encoding="utf-8")
     if MARK_BEGIN not in html or MARK_END not in html:
-        print("! manifest markers not found in mcp-course.html, skipping patch")
+        print("! manifest markers not found in index.html, skipping patch")
         return
 
     entries = ",\n".join(
@@ -573,7 +573,7 @@ def patch_html(tracks, voice):
     start = html.index(MARK_BEGIN)
     end = html.index(MARK_END) + len(MARK_END)
     HTML.write_text(html[:start] + block + html[end:], encoding="utf-8")
-    print("\nPatched %d durations into mcp-course.html" % len(tracks))
+    print("\nPatched %d durations into index.html" % len(tracks))
 
 
 # --------------------------------------------------------------------------
@@ -832,7 +832,7 @@ def main():
 
     stamp_path.write_text(json.dumps(stamps, indent=1))
     if clone:
-        print("Clone output in %s -- audio/ and mcp-course.html untouched." % out_dir)
+        print("Clone output in %s -- audio/ and index.html untouched." % out_dir)
     else:
         patch_html(tracks, args.voice)
 
