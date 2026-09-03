@@ -36,9 +36,11 @@ AUDIO = ROOT / "audio-kokoro"
 MODELS = ROOT / "models"
 # Each narration has its own page. The default edition is the one in my
 # own voice; the Kokoro edition is the alternative.
-PAGES = {"qwen": "index.html",
-         "kokoro": "kokoro.html",
-         "chatterbox": "chatterbox.html"}
+# engine -> (page, credit line). The credit names who is reading rather
+# than how the audio was produced, which is not the reader's problem.
+PAGES = {"qwen":       ("index.html", "Read by Anuj Sadani"),
+         "kokoro":     ("kokoro.html", "Synthetic voice, Kokoro-82M"),
+         "chatterbox": ("chatterbox.html", "Synthetic voice, Chatterbox")}
 
 MODEL_BASE = ("https://github.com/thewh1teagle/kokoro-onnx/releases/download/"
               "model-files-v1.0")
@@ -548,7 +550,7 @@ def require_models():
 # html patching
 # --------------------------------------------------------------------------
 
-def patch_html(tracks, voice, page, audio_dir):
+def patch_html(tracks, voice, page, audio_dir, credit):
     """Write the durations into the page so the player can show times before
     any audio is fetched. Inlined rather than fetched, so the page still works
     when opened straight off disk as a file:// URL."""
@@ -570,10 +572,11 @@ def patch_html(tracks, voice, page, audio_dir):
         "var AUDIO = {\n"
         '  dir: "audio/",\n'
         '  voice: "%s",\n'
+        '  credit: "%s",\n'
         "  tracks: {\n%s\n  }\n"
         "};\n"
         "/* " + MARK_END
-    ) % (audio_dir, voice, entries)
+    ) % (audio_dir, voice, credit, entries)
 
     start = html.index(MARK_BEGIN)
     end = html.index(MARK_END) + len(MARK_END)
@@ -836,9 +839,10 @@ def main():
             engine.hits = engine.misses = 0
 
     stamp_path.write_text(json.dumps(stamps, indent=1))
-    page = PAGES.get(args.engine)
-    if page:
-        patch_html(tracks, args.voice, page, out_dir.name)
+    mapping = PAGES.get(args.engine)
+    if mapping:
+        page, credit = mapping
+        patch_html(tracks, args.voice, page, out_dir.name, credit)
     else:
         print("No page is mapped to engine %r, so no manifest was patched."
               % args.engine)

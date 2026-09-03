@@ -334,8 +334,14 @@ details.acc p{margin:10px 0 0;max-width:64ch;color:var(--ink-2)}
 
   <div class="aud-intro" id="aud-intro">
     <button class="btn" id="aud-start">▶ Listen straight through</button>
+    <button class="vsw" id="vsw" type="button" role="switch"
+            aria-checked="false" data-go="kokoro.html" title="Switch narration voice">
+      <span class="vsw-lbl vsw-a">Anuj</span>
+      <span class="vsw-track"><span class="vsw-knob"></span></span>
+      <span class="vsw-lbl vsw-b">AI</span>
+    </button>
     <span class="figcap" id="aud-credit"></span>
-    <span class="figcap" id="aud-alt"> &middot; <a href="kokoro.html">prefer a synthetic voice?</a></span>
+    </span>
   </div>
 </header>
 
@@ -1021,6 +1027,7 @@ var esc = function(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;
 var AUDIO = {
   dir: "audio-qwen/",
   voice: "Anuj Sadani",
+  credit: "Read by Anuj Sadani",
   tracks: {
     ch00: { f: "ch00.mp3", d: 139.2 },
     ch01: { f: "ch01.mp3", d: 136.6 },
@@ -1697,8 +1704,7 @@ renderQuiz();
   var intro = $("#aud-intro"), partno = $("#aud-partno");
   $("#aud-total").textContent = "~" + Math.round(total / 60) + " min";
   $("#aud-credit").textContent =
-    "Narrated offline" + (AUDIO.voice ? " · voice " + AUDIO.voice : "") +
-    " · " + order.length + " chapters";
+    (AUDIO.credit || "") + " · " + order.length + " chapters";
   $("#aud-start").addEventListener("click", function(){
     continuous = true;
     barCont.setAttribute("aria-pressed", "true");
@@ -1748,3 +1754,35 @@ renderQuiz();
 </script>
 </body>
 </html>
+
+<style>
+/* Narration voice switch. Self-contained: the knob side shows which voice is
+   playing, and the row keeps the switch next to the play button rather than
+   letting the long credit line push it onto its own line. */
+#aud-intro{gap:12px}
+#aud-credit{flex-basis:100%;margin-top:2px}
+.vsw{display:inline-flex;align-items:center;gap:8px;flex:none;background:none;
+     border:0;padding:0;margin:0;cursor:pointer;font:inherit;color:inherit;line-height:1}
+.vsw-lbl{font-size:12px;letter-spacing:.02em;opacity:.45;transition:opacity .15s}
+.vsw[aria-checked="false"] .vsw-a,.vsw[aria-checked="true"] .vsw-b{opacity:1;font-weight:600}
+.vsw-track{position:relative;flex:none;width:32px;height:17px;border-radius:9px;
+     background:var(--paper-3,#e6e2d9);border:1px solid var(--rule);transition:background .18s}
+.vsw-knob{position:absolute;top:1px;left:1px;width:13px;height:13px;border-radius:50%;
+     background:var(--ink);transition:transform .18s}
+.vsw[aria-checked="true"] .vsw-knob{transform:translateX(15px)}
+.vsw:hover .vsw-track{border-color:var(--ink)}
+.vsw:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){.vsw-knob,.vsw-track,.vsw-lbl{transition:none}}
+</style>
+<script>
+/* Flip to the other narration. Pause first so two voices never overlap. */
+(function () {
+  var sw = document.getElementById("vsw");
+  if (!sw) return;
+  sw.addEventListener("click", function () {
+    var a = document.querySelector("audio");
+    if (a) { try { a.pause(); } catch (e) {} }
+    location.href = sw.getAttribute("data-go");
+  });
+})();
+</script>
