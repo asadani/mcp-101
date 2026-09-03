@@ -19,3 +19,6 @@ models/
 
 __pycache__/
 *.pyc
+
+# Comparison artefact from an earlier render, not part of the tutorial.
+audio-chatterbox/

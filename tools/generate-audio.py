@@ -34,7 +34,11 @@ ROOT = Path(__file__).resolve().parent.parent
 NARRATION = ROOT / "narration"
 AUDIO = ROOT / "audio-kokoro"
 MODELS = ROOT / "models"
-HTML = ROOT / "index.html"
+# Each narration has its own page. The default edition is the one in my
+# own voice; the Kokoro edition is the alternative.
+PAGES = {"qwen": "index.html",
+         "kokoro": "kokoro.html",
+         "chatterbox": "chatterbox.html"}
 
 MODEL_BASE = ("https://github.com/thewh1teagle/kokoro-onnx/releases/download/"
               "model-files-v1.0")
@@ -544,16 +548,17 @@ def require_models():
 # html patching
 # --------------------------------------------------------------------------
 
-def patch_html(tracks, voice):
+def patch_html(tracks, voice, page, audio_dir):
     """Write the durations into the page so the player can show times before
     any audio is fetched. Inlined rather than fetched, so the page still works
     when opened straight off disk as a file:// URL."""
-    if not HTML.exists():
-        print("! index.html not found, skipping manifest patch")
+    target = ROOT / page
+    if not target.exists():
+        print("! %s not found, skipping manifest patch" % page)
         return
-    html = HTML.read_text(encoding="utf-8")
+    html = target.read_text(encoding="utf-8")
     if MARK_BEGIN not in html or MARK_END not in html:
-        print("! manifest markers not found in index.html, skipping patch")
+        print("! manifest markers not found in %s, skipping patch" % page)
         return
 
     entries = ",\n".join(
@@ -568,7 +573,7 @@ def patch_html(tracks, voice):
         "  tracks: {\n%s\n  }\n"
         "};\n"
         "/* " + MARK_END
-    ) % (voice, entries)
+    ) % (audio_dir, voice, entries)
 
     start = html.index(MARK_BEGIN)
     end = html.index(MARK_END) + len(MARK_END)
@@ -831,10 +836,12 @@ def main():
             engine.hits = engine.misses = 0
 
     stamp_path.write_text(json.dumps(stamps, indent=1))
-    if clone:
-        print("Clone output in %s -- audio/ and index.html untouched." % out_dir)
+    page = PAGES.get(args.engine)
+    if page:
+        patch_html(tracks, args.voice, page, out_dir.name)
     else:
-        patch_html(tracks, args.voice)
+        print("No page is mapped to engine %r, so no manifest was patched."
+              % args.engine)
 
     if rendered:
         print("Rendered %.1f min of audio in %.1f min of wall clock"

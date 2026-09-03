@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MCP, from the wire up (my voice)</title>
+<title>MCP, from the wire up</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -335,7 +335,7 @@ details.acc p{margin:10px 0 0;max-width:64ch;color:var(--ink-2)}
   <div class="aud-intro" id="aud-intro">
     <button class="btn" id="aud-start">▶ Listen straight through</button>
     <span class="figcap" id="aud-credit"></span>
-    <span class="figcap" id="aud-alt"> &middot; <a href="index.html">back to the default voice</a></span>
+    <span class="figcap" id="aud-alt"> &middot; <a href="index.html">back to the default narration</a></span>
   </div>
 </header>
 
@@ -1017,29 +1017,29 @@ var $ = function(s){ return document.querySelector(s); };
 var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
 var esc = function(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); };
 
-/* AUDIO-MANIFEST:BEGIN · clone track · regenerate with tools/make-voice-page.py */
+/* AUDIO-MANIFEST:BEGIN · written by tools/generate-audio.py · do not hand-edit */
 var AUDIO = {
-  dir: "audio-qwen/",
-  voice: "Anuj (Qwen3-TTS 0.6B clone)",
+  dir: "audio-kokoro/",
+  voice: "bm_george+bm_fable",
   tracks: {
-    ch00: { f: "ch00.mp3", d: 139.2 },
-    ch01: { f: "ch01.mp3", d: 136.6 },
-    ch02: { f: "ch02.mp3", d: 175.9 },
-    ch03: { f: "ch03.mp3", d: 167.0 },
-    ch04: { f: "ch04.mp3", d: 151.4 },
-    ch05: { f: "ch05.mp3", d: 163.2 },
-    ch06: { f: "ch06.mp3", d: 172.3 },
-    ch07: { f: "ch07.mp3", d: 164.7 },
-    ch08: { f: "ch08.mp3", d: 184.0 },
-    ch09: { f: "ch09.mp3", d: 139.7 },
-    ch10: { f: "ch10.mp3", d: 167.1 },
-    ch11: { f: "ch11.mp3", d: 198.5 },
-    ch12: { f: "ch12.mp3", d: 188.5 },
-    ch13: { f: "ch13.mp3", d: 159.3 },
-    ch14: { f: "ch14.mp3", d: 144.8 },
-    ch15: { f: "ch15.mp3", d: 183.5 },
-    ch16: { f: "ch16.mp3", d: 205.1 },
-    ch17: { f: "ch17.mp3", d: 178.4 }
+    ch00: { f: "ch00.mp3", d: 128.4 },
+    ch01: { f: "ch01.mp3", d: 125.0 },
+    ch02: { f: "ch02.mp3", d: 157.7 },
+    ch03: { f: "ch03.mp3", d: 155.4 },
+    ch04: { f: "ch04.mp3", d: 141.0 },
+    ch05: { f: "ch05.mp3", d: 150.0 },
+    ch06: { f: "ch06.mp3", d: 155.5 },
+    ch07: { f: "ch07.mp3", d: 155.4 },
+    ch08: { f: "ch08.mp3", d: 172.1 },
+    ch09: { f: "ch09.mp3", d: 124.2 },
+    ch10: { f: "ch10.mp3", d: 150.2 },
+    ch11: { f: "ch11.mp3", d: 181.5 },
+    ch12: { f: "ch12.mp3", d: 168.3 },
+    ch13: { f: "ch13.mp3", d: 143.0 },
+    ch14: { f: "ch14.mp3", d: 130.1 },
+    ch15: { f: "ch15.mp3", d: 157.1 },
+    ch16: { f: "ch16.mp3", d: 186.3 },
+    ch17: { f: "ch17.mp3", d: 149.2 }
   }
 };
 /* AUDIO-MANIFEST:END */
@@ -1697,7 +1697,7 @@ renderQuiz();
   var intro = $("#aud-intro"), partno = $("#aud-partno");
   $("#aud-total").textContent = "~" + Math.round(total / 60) + " min";
   $("#aud-credit").textContent =
-    "Narrated offline with Qwen3-TTS 0.6B" + (AUDIO.voice ? " · voice " + AUDIO.voice : "") +
+    "Narrated offline with Kokoro-82M" + (AUDIO.voice ? " · voice " + AUDIO.voice : "") +
     " · " + order.length + " chapters";
   $("#aud-start").addEventListener("click", function(){
     continuous = true;
