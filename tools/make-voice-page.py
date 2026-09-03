@@ -76,6 +76,16 @@ def main():
     else:
         print("! credit line not found; the page will still say Kokoro-82M")
 
+    # The two pages cross-link, so a reader on either can reach the other.
+    # index.html carries the outbound link; flip it to point back.
+    alt = ('<span class="figcap" id="aud-alt"> &middot; '
+           '<a href="%s">%s</a></span>')
+    old_alt = alt % ("my-voice.html", "also in my own voice")
+    if old_alt in out:
+        out = out.replace(old_alt, alt % ("index.html", "back to the default voice"), 1)
+    else:
+        print("! cross-link not found; the pages will not link to each other")
+
     m = re.search(r"<title>(.*?)</title>", out, re.S)
     if m and "voice" not in m.group(1).lower():
         out = out.replace(m.group(0), "<title>%s (my voice)</title>"
