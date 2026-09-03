@@ -1,0 +1,23 @@
+Chapter five. The M by N problem.
+
+Hand-writing integrations works perfectly well for three tools. The arithmetic is what kills it.
+
+So let's count. Say there are M AI applications. A desktop chat app. An I.D.E. A coding agent. An internal support bot. Four, say.
+
+And say there are N systems worth connecting to. GitHub. Postgres. Slack. Google Drive. Your company's billing service. Five.
+
+Without a shared standard, every app has to write its own integration for every system. Four times five. Twenty separate pieces of code to write, to test, to keep working when an API changes underneath you, and to keep secure.
+
+There are sliders beside this. Push them. Because the number does not grow the way your intuition says it does. Ten apps and ten systems is not twenty pieces of work. It is a hundred. Then flip it into MCP mode and watch what happens to the same diagram — a hundred lines collapses into twenty. Ten servers built once, ten clients built once, and every pairing works for free.
+
+Now, if you have been in this industry for any length of time, that shape should be setting off a bell.
+
+Because this is not a new problem. This is the same problem USB solved for peripherals. Before USB, every printer needed a driver for every operating system. It is the same problem the Language Server Protocol solved for editors and programming languages — before L.S.P., every editor needed its own integration for every language. It is the same problem ODBC solved for applications and databases, decades ago.
+
+And every single time, the answer was identical. Stop writing pair-by-pair adapters. Agree on one interface in the middle. Let both sides build to it once, and then walk away.
+
+So — definition, take two. And this one should land differently than the one in chapter zero.
+
+MCP is the interface in the middle. A system exposes itself once as an MCP server. An AI application speaks MCP once as a client. And any app can then use any server, without either side knowing the other exists.
+
+That last clause is the whole prize. Without either side knowing the other exists. The person who wrote the GitHub server has never heard of your internal support bot, and it works anyway.

@@ -1,0 +1,23 @@
+Chapter six. Host, client, server.
+
+Three words that everyone mixes up, including documentation. Ten seconds of care here will save you a lot of confusion later, so let's spend the ten seconds.
+
+The host is the AI application you actually use. Claude Desktop. An I.D.E. A coding agent. It owns the model conversation, it owns the user interface, and — this is the part that matters — it owns the user's trust.
+
+The client is a connector living inside the host. One client per server. A dedicated, one-to-one link. The host spawns a client for each server it wants to talk to.
+
+The server is a separate program that exposes capabilities. It runs locally as a subprocess, or remotely over HTTP. And it knows nothing whatsoever about models or prompts. It has no idea it is being used by an AI at all.
+
+So a host with four connections is running four clients. And that one-to-one pairing is not ceremony. It is not architectural neatness for its own sake. It is what keeps servers isolated from each other — so that a compromised, or simply badly behaved, server cannot reach into another server's session. Remember that when we get to chapter eleven.
+
+Now look at the figure. Because there is one thing in it that I would like you to take away above everything else in this chapter.
+
+The model sits inside the host. Not inside MCP.
+
+MCP never touches the model. Not once. Not at any point. The client fetches tool definitions over MCP and then hands them to the model through the LLM API — a completely separate conversation, over a completely separate wire. If you remember one sentence from this entire document, that is a strong candidate.
+
+Underneath all of this, MCP messages are JSON-RPC two point zero. And that is a deliberately dull choice. It is a decades-old convention. Send an object with a method, some parameters, and an I.D. Get back an object with the same I.D., and either a result or an error. Drop the I.D. and it becomes a notification, which means no reply is expected.
+
+But there is one difference from REST hiding in there, and it is not a small one. In JSON-RPC, both sides may send requests. The connection is symmetric.
+
+That is the thing I promised you at the end of chapter one. And it is exactly what makes the next chapter's server-to-client features possible.

@@ -1,0 +1,21 @@
+Chapter nine. The full lifecycle.
+
+Everything so far, in order, with the actual frames on the wire. One question — is it going to rain in Pune tomorrow? — from cold start all the way to an answer.
+
+This is the chapter where the pieces stop being separate. So step through it properly. Watch the wire tap fill up as you go.
+
+And here is the specific thing to look for, because it is the whole reason this chapter exists.
+
+Watch for exactly where MCP stops and tool use begins.
+
+Steps six, seven and ten are not MCP. At all. They are the LLM API — chapter four, doing its job. During those three steps there is no MCP frame on the wire anywhere. The client is talking to the model, and the MCP server has no idea any of it is happening.
+
+That boundary is invisible in almost every diagram you will see of this protocol on the internet, and it is the source of an enormous amount of confusion. Here you can see it, step by step, because the frames are either there or they are not.
+
+Now, when you have walked the whole trace, two observations are worth more than all the rest of it.
+
+The first. Steps one through five happen once, at connection time. Before you have typed anything. The tool list is fetched when the host starts up and the connection is established — which is precisely how a model can know about a service that did not exist when it was trained. There is no magic in that. The description was handed to it thirty seconds ago.
+
+The second. The round trip repeats. It is a loop. A model can call a tool, read the result, decide that it now needs something else, call another tool, read that, and keep going — until it has enough to actually answer. Steps six through ten are not a straight line through the diagram. They are a cycle, and it can run many times before you see a single word of response.
+
+That loop is what people mean when they say the word "agent". There is nothing else in it. It is this chapter, repeated.

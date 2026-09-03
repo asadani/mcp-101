@@ -1,0 +1,27 @@
+Chapter fifteen. Debugging and testing.
+
+The failure modes are the same five, over and over. Check these before you start suspecting the model — because the model is almost never the problem, and it is a very seductive thing to blame.
+
+One. Nothing shows up in the tool list.
+
+This is almost always a stray print statement, or a console log, writing to standard output and corrupting the JSON-RPC stream. That is chapter eight's warning, hit for real. Send your own logs to standard error, never to standard output. And while you are there, confirm the server process is actually still alive — a server that crashed on startup and a server with no tools look identical from the outside.
+
+Two. The model never calls the tool you know is right.
+
+The description does not say when to use it. Go and re-read that description as the only sentence the model has ever seen about this tool — not as documentation for a human who already knows your domain and just needs reminding of the argument order. Those are very different pieces of writing.
+
+Three. The call succeeds, but the model does something wrong with the result.
+
+You have probably returned a large or oddly-shaped payload, with the error flag set to false. Trim it down to the fields that matter. And for genuine failures, return the error flag set to true with a plain-English message, rather than throwing an exception. That is chapter twelve's "errors should teach", applied.
+
+Four. It worked yesterday, and it broke today.
+
+A rug-pull, or a silent version bump. Chapter eleven. Pin the version of any server you install, and if it is one you do not control, diff its tool list from time to time.
+
+Five. It works over stdio and breaks over HTTP.
+
+That is usually the Origin or CORS check from chapter eight, or the auth header from chapter thirteen. Test the transport in isolation before you go anywhere near the tool logic.
+
+And one tool, which you should install today rather than the first time you are stuck. The official MCP Inspector. Run it with N.P.X. against your server, and it drives the thing with no host and no model involved at all. You can call initialize, list the tools, and call one by hand, and read the raw JSON-RPC coming back.
+
+That is the fastest way in existence to tell "my server is wrong" apart from "the model chose badly". Two completely different problems, that feel exactly the same from the chat window.

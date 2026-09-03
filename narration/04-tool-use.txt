@@ -1,0 +1,29 @@
+Chapter four. Tool use.
+
+Before MCP exists at all, the model already has one relevant ability. It can ask for a function to be called. Understand this properly — really properly — and MCP becomes almost obvious.
+
+Tool use, also called function calling, is a feature of the LLM API itself. Not of MCP. In your request to the model, alongside the conversation, you include a list of tools. Each one is three things: a name, a description in plain English, and a JSON Schema describing its arguments.
+
+And then the model may reply — not with prose, but with a structured request. Call get forecast, with city set to Pune.
+
+Now here is the critical part, and it is the single most common misunderstanding in this entire subject. So I am going to say it slowly.
+
+The model does not run the tool. It cannot run the tool. There is no mechanism by which it could.
+
+What it produces is a block of text saying which tool it would like called, and with what arguments. And then it stops. And it waits.
+
+Your code executes the call. Your code sends the result back. The model is a very good suggestion engine, wired to nothing.
+
+If that lands, chapter nine will be easy, because half of chapter nine is watching control cross back and forth between things that each can only do one job.
+
+There is a stepper beside this. Walk through one complete cycle and count the crossings. It is more of them than you would expect.
+
+And when you have done that, I want you to notice what is missing from the picture. Where did that tool list come from?
+
+In a plain tool-use application, you typed it in. You wrote the JSON Schema by hand. You wrote the branch that says: if the name equals get forecast, then do this. By hand. And you wrote the HTTP call inside that branch. By hand.
+
+Every tool. Every application. Every time.
+
+That is not a bug, and for one app with three tools it is completely fine. It is about twenty minutes of work.
+
+But hold that thought, because in the next chapter we are going to do some arithmetic on it. And the arithmetic is what kills it.

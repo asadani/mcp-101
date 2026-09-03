@@ -1,0 +1,23 @@
+Chapter eight. Transports.
+
+The messages are the same either way. The only question in this chapter is what pipe they travel down. And there are two answers.
+
+The first is stdio — a subprocess on your own machine. The host launches the server as a child process, and the two of them exchange newline-delimited JSON over standard input and standard output. No ports. No network. No T.L.S. None of it. If the server needs credentials, it reads them from environment variables that you configured.
+
+This is worth pausing on, because it corrects a mental image most people arrive with. An MCP server is usually not a big machine humming away somewhere. It is very often a small program on your laptop, started when your editor starts, and killed when you close it.
+
+And there is one trap here that you will hit for real. Never write logs to standard output. Not once. Not a stray print statement you left in while debugging. Standard output is the message stream, and anything else you put on it corrupts the JSON. Use standard error for logs. Remember this, because in chapter fifteen it comes back as the single most common failure in the entire ecosystem.
+
+The second transport is Streamable HTTP — a server someone else operates. The client POSTs JSON-RPC messages to a single endpoint. The server may reply with one JSON response, or it may upgrade to a stream, so it can push progress updates — and its own requests — back to the client before the final answer arrives.
+
+Where stdio uses environment variables, this uses the OAuth two point one profile, with the host running a real authorisation flow in a browser. That is chapter thirteen.
+
+And the trap on this side: validate the Origin header, and bind to localhost during local development. Otherwise a web page you happen to have open can reach your server. That one also comes back in chapter fifteen.
+
+There is a comparison table beside this — it is worth a look, side by side.
+
+But the sentence to take away is this one. The messages are byte-for-byte identical between the two. Only the envelope changed.
+
+One historical note. An older HTTP-plus-S.S.E. transport existed in early revisions and has since been superseded. You will still meet it in the wild, in servers nobody maintains any more.
+
+And that raises the general point. The protocol is versioned, and the version is negotiated during initialize, so both sides agree on a revision before any real work happens. Which means: check the current specification. Do not trust a version string you see hard-coded in a tutorial. Including this one.

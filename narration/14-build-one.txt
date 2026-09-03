@@ -1,0 +1,19 @@
+Chapter fourteen. Build one.
+
+Everything above this point is theory until you have written the thirty lines yourself. So here is the get forecast tool — the same one from chapters four and nine — as an actual working server, in both official S.D.K.s. Python and TypeScript. Pick your language with the tabs.
+
+I am not going to read code aloud to you. Look at it on screen. But there are three things in it worth pointing out, because they are easy to skim past and they each carry a chapter behind them.
+
+The first. You will notice you are not writing JSON Schema anywhere. In the Python version you write a normal function, with normal type hints and a normal docstring, and you put a decorator on it. That is all. The S.D.K. derives the schema from your function signature.
+
+So look back at chapter nine, at that tools list frame with the schema in it — the one that looked like protocol machinery. That frame is generated from this. You never hand-write the wire format. In fact you should not; it will drift from your code the first time you change an argument.
+
+The second. That docstring is not documentation. It is chapter twelve, live. It is the description the model will read, and it is the only thing that determines whether your tool gets called at the right moment. It is the most load-bearing string in the file, and it looks exactly like a comment.
+
+The third. Look at how much is not there. No HTTP handling. No message loop. No parsing. The S.D.K. handles the transport, and your code is just a function that takes a city and returns a forecast.
+
+That is what thirty lines buys you, and it is why I would rather you wrote one than read another three chapters about it.
+
+Then run it, point a host at it over stdio, and it appears in that host's tool list — behaving exactly like the frame you stepped through in chapter nine. Because this is the thing that generates that frame.
+
+One warning before you go and do it. Read chapter fifteen first. The first run almost never works, and it is rarely the code's fault.

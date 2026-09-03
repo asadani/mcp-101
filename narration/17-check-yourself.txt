@@ -1,0 +1,25 @@
+Chapter seventeen. Check yourself.
+
+Eight questions. And the explanations matter considerably more than the score — each one targets a specific misconception that is easy to walk away from this document still holding.
+
+Do them on screen. I will wait here.
+
+Right. Now the definition one last time. And this is the same sentence you were shown in chapter zero, filled in.
+
+MCP is an open protocol, built on JSON-RPC, in which a server advertises tools, resources and prompts. A client, inside a host application, discovers them at runtime and hands them to a model as tool definitions. The model decides which to call. And the client executes the call on its behalf, and returns the result.
+
+Go through it clause by clause. Built on JSON-RPC — chapter six, and that is what makes the connection symmetric. A server advertises — chapter three, discovery in band rather than out of band. Tools, resources and prompts — chapter seven, and who decides to use each one. A client inside a host — chapter six, and the model is inside the host, not inside MCP. Discovers them at runtime — chapter three again, because there is no "first" for a model. Hands them to a model as tool definitions — that is chapter four, and it is not MCP at all. The model decides which to call — and stops there, because it cannot do anything else. And the client executes it — because something has to, and the model never will.
+
+Every clause is now a thing you know the reason for. That is the difference between having read a definition and understanding a protocol.
+
+Where to go next. Four things, in the order I would do them.
+
+Read the specification itself. It is short, and it will now be readable — which it very much is not, first.
+
+Install two or three existing servers in a host application, and watch what they expose. Look at their tool lists with the Inspector.
+
+Then write one. A server with a single tool is about thirty lines in either official S.D.K., and building one teaches more than the rest of this document put together.
+
+And then — go back and re-read chapter twelve. And rewrite it.
+
+Because the first server you write will be endpoint-shaped. Everyone's is. And you will only really understand why that is the wrong shape once you have watched a model use yours badly.

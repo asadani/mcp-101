@@ -1,0 +1,5 @@
+# Narration pipeline for mcp-course.html. All Apache-2.0 / MIT / BSD licensed.
+# No API keys, no accounts, no network calls at render time.
+kokoro-onnx>=0.4.7   # Kokoro-82M TTS via onnxruntime; model weights are Apache-2.0
+soundfile>=0.13      # libsndfile bindings; writes MP3 directly, so no ffmpeg needed
+numpy>=1.26

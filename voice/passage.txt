@@ -1,0 +1,34 @@
+READ THIS ALOUD.  Narration pace - as if teaching, not chatting.
+Leave a second of silence before you start and after you finish.
+Mistakes are fine. Do not re-record to make it perfect.
+
+------------------------------------------------------------
+
+A protocol is just an agreement about how two programs talk.
+
+A client is any program that wants something; a server is any
+program that has it and is listening.
+
+Underneath, MCP messages are JSON-RPC two point zero. Send a
+method, some parameters, and an ID; get back a result or an error.
+
+For remote servers the specification adopts OAuth two point one,
+and the host runs a real authorisation flow in a browser.
+
+Locally it's simpler: the host launches the server as a subprocess,
+and they exchange newline-delimited JSON over standard input and
+output. No ports, no network, no TLS.
+
+The model does not run the tool. It cannot.
+
+It produces a block of text saying which tool it would like called,
+and with what arguments, and then it stops, and it waits.
+
+Your code executes the call. Your code sends the result back.
+
+Zero, one, two, three, four, five, six, seven, eight, nine.
+
+Is it going to rain in Pune tomorrow?
+
+------------------------------------------------------------
+Save as:  reference\anuj.wav   (or .m4a / .mp3 - I'll convert)

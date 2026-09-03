@@ -1,0 +1,23 @@
+Chapter thirteen. Authorization.
+
+Start with the case that needs nothing. A local server that you launched yourself already runs as you. Same user, same permissions, same machine. There is genuinely nothing to authorize.
+
+A remote server is a different animal entirely. It is a separate program, on somebody else's infrastructure, and now the question "who is this request really from?" needs a real answer.
+
+MCP does not invent its own auth scheme, and that is a good decision. For remote servers — Streamable HTTP — the specification adopts OAuth two point one, and casts the pieces in familiar roles.
+
+The MCP server is an OAuth resource server. The host is the OAuth client. And a separate authorization server is the thing that actually issues tokens.
+
+Note that third role, because it is where people's mental model goes wrong. The MCP server usually is not the authorization server. It just points the client at one.
+
+Step through the dance beside this — the discovery, the metadata, the browser flow, the token, and then the authorised call.
+
+And when you reach the final step, look at it closely, because it is doing more work than it appears to.
+
+That last step binds the token to this specific server as its audience. That is R.F.C. eight seven oh seven, resource indicators.
+
+Skip it, and you have built the confused deputy from chapter eleven with your own hands. A token that was meant for one service gets replayed against a different service that happens to trust the same authorization server. Nobody stole anything. Nobody broke any crypto. The token was simply used somewhere it was never meant to go, and nothing in the system objected.
+
+One closing note, to keep the two worlds separate in your head. None of this applies over stdio. The server already runs as your operating system user, inheriting your environment and your file permissions. The transport itself is the trust boundary. So credentials there are just environment variables, or an entry in an OS keychain — exactly as we said in chapter eight.
+
+Two transports. Two completely different trust stories. Do not port the reasoning from one to the other.

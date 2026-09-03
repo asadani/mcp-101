@@ -1,0 +1,21 @@
+# Voice recordings. Deliberately not published: reference-short.wav is
+# exactly the input someone needs to clone the voice it holds. The transcript
+# and the passage to read are text, and are tracked.
+voice/*.wav
+voice/*.m4a
+voice/*.mp3
+voice/samples/
+
+# Regenerable. `python tools/generate-audio.py --fetch-model` gets these back.
+models/
+
+# Per-chunk synthesis cache. Large, and rebuilt on demand; its only job is to
+# make an interrupted render resumable.
+*/.chunks/
+
+# Superseded by git history.
+*.bak
+*.bak[0-9]
+
+__pycache__/
+*.pyc

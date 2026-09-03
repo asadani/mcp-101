@@ -1,0 +1,25 @@
+Chapter two. API, then REST.
+
+An API is the list of things you are allowed to ask for. REST is one popular set of conventions for writing that list down. That is the chapter. The rest is detail, but the detail matters.
+
+So. If a server is a program that answers, its API — application programming interface — is the published contract of what it will answer. Which questions are valid. What you have to send with them. What comes back.
+
+A contract. Nothing more than that. The word gets thrown around as though it means "a web thing", but it doesn't. A library sitting on your disk has an API too. So does the operating system. So does a function you wrote this morning.
+
+REST is a style for building web APIs specifically, and it won — it became the default — because its conventions are boring, in the good way. Three ideas carry most of it.
+
+First, things get addresses. Every noun in the system gets a URL. Slash users slash forty-two is a user. Slash users slash forty-two slash orders is that user's orders. Predictable.
+
+Second, the verbs are fixed. You don't get to invent actions. HTTP already has them. GET reads. POST creates. PUT and PATCH update. DELETE removes. Four verbs, and you bend your problem to fit them.
+
+Third, nothing is remembered. Each request stands entirely alone and carries everything needed to serve it. The server keeps no memory of your last call. That is what makes it possible to put a thousand servers behind a load balancer and not care which one you hit.
+
+There is a panel next to this where you can compose a call — pick a verb, pick a path, and watch the request and the response.
+
+And when you do, look at the shape of what comes back. A status code. Some headers. A body of JSON. Perfectly clean.
+
+Now here is the sentence I actually want you to carry into the next chapter. A human developer reads the documentation, learns that slash users slash forty-two slash orders exists, and then writes code that calls it. The reading of the documentation happens in a human head. Months before the code ever runs.
+
+Sit with that. Months before. In a head.
+
+That is not a flaw in REST. REST was designed for exactly that world and it serves it beautifully. But it is an assumption. And in the next chapter we are going to take a model, drop it into that world, and watch the assumption fail.

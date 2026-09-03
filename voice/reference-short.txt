@@ -1,0 +1,1 @@
+A protocol is just an agreement about how two programs talk.

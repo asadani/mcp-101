@@ -1,0 +1,31 @@
+Chapter sixteen. AWS in practice.
+
+A worked case study. Because "task-shaped, not endpoint-shaped" is very easy to agree with in chapter twelve and genuinely hard to apply on Monday morning.
+
+Here is the setup. AWS already had a command line interface covering every one of its four hundred plus services. Complete coverage. Mature. Well documented. So why also ship an MCP server?
+
+Start with the case against, honestly, because it is strong. The C.L.I. already covers every API. An agent can just shell out to it directly. Auth is already solved — profiles, single sign-on, I.A.M. A wrapper is, at best, a lossy subset of the C.L.I. And it will lag behind every new service launch.
+
+That is a real argument. If you cannot answer it, you should not build the server.
+
+So here is the answer, and none of it is "wrap the commands".
+
+Reach. Many hosts have no shell at all. Chat applications, I.D.E.s, managed agents — there is simply no terminal for the model to shell out to. The C.L.I. being excellent does not help you if there is nowhere to run it.
+
+Discovery. Four hundred services and fifteen thousand APIs. A model guessing flags across that surface hallucinates constantly, and confidently. Typed schemas beat guessed flags.
+
+Context economy. Raw C.L.I. JSON floods the context window. The server trims it before it ever reaches the model. That is chapter twelve's budget, at AWS scale.
+
+Guardrails. Read-only allowlists. Scoped I.A.M. Confirmation before any mutation.
+
+Audit. CloudTrail records every call, rather than an opaque shell string that nobody can reconstruct afterwards.
+
+And freshness. A documentation server grounds the model in services that were released after its training cut-off.
+
+It is also worth knowing when to avoid it. Do not mirror the C.L.I. command for command — that is the failure chapter twelve warned about. Do not use it for interactive or streaming flows, like an S.S.M. session or an S3 sync. Skip it in environments that already have a sandboxed shell. And do not push large binary transfers through it.
+
+What they actually shipped is the interesting part. Not a tool per command. An API server where the model writes commands and the server runs them. A knowledge and documentation server for grounding. A unified managed remote server with I.A.M. and CloudTrail built in. And domain servers for specific areas — C.D.K., E.C.S., E.K.S., cost analysis, serverless.
+
+Now look at the shape of that answer. It is not "wrap every command". It is reach, discovery, context economy, and guardrails.
+
+Which is the same list from chapters eleven and twelve. Just with a real vendor's name on it, and a bill attached.

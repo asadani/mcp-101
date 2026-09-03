@@ -1,0 +1,29 @@
+Chapter twelve. Designing servers people can use.
+
+The gap between a working MCP server and a good one is almost entirely about how much thinking you did on behalf of the model. Four ideas.
+
+First. Task-shaped, not endpoint-shaped.
+
+The tempting move — and it is very tempting, because it can be automated — is to generate one tool per API endpoint. Point a script at your OpenAPI file and out come two hundred tools.
+
+And now the model has two hundred tools, every one of them named after an internal concept that made sense to whoever designed the database, and it has to chain six of them together correctly to do anything a user would actually ask for.
+
+Better: find the handful of jobs people genuinely ask for, and expose those. One tool called schedule meeting — which internally checks availability, resolves the attendees, and creates the event — beats five primitives that the model has to orchestrate. You did the orchestration once, at design time, correctly. Rather than asking a model to rediscover it on every conversation, probabilistically.
+
+Second. Context is a budget.
+
+Every tool definition sits in the model's context for the entire conversation. Whether it gets used or not. So does every byte you return. A tool that dumps forty kilobytes of JSON has just spent a large slice of the window on fields that nobody needed and nobody read.
+
+So return the fields that matter. Paginate. Offer a detail-level parameter. Concise, relevant output is a design feature. It is not an optimisation you get to do later.
+
+Third. Descriptions are prompt engineering.
+
+The description is the only thing standing between your tool and being called at completely the wrong moment. So say what it does. Say when to use it. Say when not to. And say what the arguments mean in domain terms, not in schema terms.
+
+And name things unambiguously. Two tools called "search" and "find" will be confused. By any model. Forever. That is not a model limitation you can wait out.
+
+Fourth. Errors should teach.
+
+A model reads your error and tries again. So think about what it has to work with. Four hundred, bad request, teaches it nothing at all — it will retry the same thing.
+
+Whereas: the start date must be ISO eight six oh one, for example twenty twenty-six dash oh three dash oh one; you sent "first of March". That gets you a correct retry on the very next turn. Same failure. Completely different outcome. And the only difference is that you wrote the error for the reader you actually have.

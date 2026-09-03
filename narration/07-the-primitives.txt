@@ -1,0 +1,27 @@
+Chapter seven. The primitives.
+
+A server offers three kinds of thing. And they are distinguished by who decides to use them. That distinction — who decides — is the design insight most people miss, and missing it is why so many MCP servers are worse than they need to be.
+
+Tools are model-controlled. The model decides when to call one, based on the description you wrote. Fetch a forecast, create a ticket, run a query.
+
+Resources are application-controlled. The host decides what to pull in and put in front of the model. A file, a schema, a style guide. The model does not choose; it is simply given.
+
+Prompts are user-controlled. Templates the user explicitly invokes — a slash command, a menu item. The user reaches for it deliberately.
+
+Model, application, user. Three primitives, three different decision-makers. Use the tabs beside this to see the actual wire format for each.
+
+Now — three more, going the other way.
+
+Because the connection is symmetric, a server can also ask things of the client. And this is the moment MCP stops looking like an API wrapper and starts looking like a real protocol.
+
+Sampling. The server asks the client to run a model completion on its behalf. Think about what that means. A server can use intelligence without shipping its own model, without holding an API key, without a bill. And the host still controls the cost and the approval.
+
+Elicitation. The server asks the user a question, in the middle of a task. Which of these three accounts did you mean? The host renders the prompt. The server never sees the user directly — it just gets an answer back.
+
+Roots. The client tells the server which directories or URIs it is allowed to operate within. A boundary the server is expected to respect.
+
+And one common mistake to close on, because you will make it otherwise.
+
+People expose everything as a tool. Everything. And the reason is honest enough — tools are the only primitive most hosts fully support today, so making it a tool is the thing that works.
+
+But if the model should not be choosing when to fetch something — a style guide, a schema, a config file — then it is a resource, not a tool. Making it a tool costs you twice. It spends context on a definition that sits there for the whole conversation. And it adds a decision the model can get wrong.

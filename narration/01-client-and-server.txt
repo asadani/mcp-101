@@ -1,0 +1,19 @@
+Chapter one. Client and server.
+
+Two roles. One rule. The client starts the conversation, the server answers. That is the whole thing. Everything else in this chapter is detail.
+
+A client is any program that wants something. A server is any program that has it, and is sitting there listening. Your browser is a client. A database is a server.
+
+But here is the part worth slowing down for, because it trips people up for years. These words describe roles in a conversation. They do not describe machines. One program can be a server to one thing and a client to another, at the same moment, in the same process. A web server is a server to your browser and a client to its database. Nothing about the box it runs on changes.
+
+Hold onto that, because it is going to matter a great deal in chapter six, where we meet a program that is simultaneously a host, a client, and the thing talking to a model — and people mix all three up constantly, including the official documentation.
+
+There is a diagram beside this. Press the button and watch one round trip. A request leaves the client. It travels. The server receives it, does some work, and sends a response back along the same path.
+
+And watch what the server does before that. Nothing. It waits. The server never speaks first.
+
+That sounds trivial. It is not. That single asymmetry — the client opens the conversation, always — is baked into HTTP, into REST, and into most of the software you have ever used. It is so normal it is invisible.
+
+I am pointing at it now because MCP breaks it. In chapter seven you will meet a server that turns around and asks the client for something: run a model for me, or go and ask the user a question. That is unusual. That is not how the web works. And when we get there, the reason it is possible will be sitting right at the bottom of chapter six.
+
+For now, just the rule. Client asks. Server answers. Client first.

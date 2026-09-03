@@ -1,0 +1,17 @@
+Chapter zero. A brain in a jar.
+
+Here is the whole machine. A language model reads text, and predicts what text comes next. That's it. That is the entire capability. It has no eyes. No file system. No network connection. Not even a clock.
+
+So picture what happens when you ask it a perfectly ordinary question. What meetings do I have tomorrow? The model has three options, and none of them are good. It can refuse. It can guess. Or it can invent something that sounds completely plausible and is completely wrong. There is no path from the model to your calendar. Everything it knows was frozen at the moment training ended.
+
+That gap is the reason this entire document exists. And notice the shape of the fix, because it is not the one people reach for first. The answer is not to make the model smarter. The answer is to make the model able to reach things.
+
+And the moment you say that out loud, something slightly deflating happens. You are no longer doing artificial intelligence. You are doing ordinary software engineering. Two programs need to talk to each other. That is the problem. It has been the problem for fifty years.
+
+Now, there is a definition on screen. Model Context Protocol is an open standard for connecting AI applications to external systems — data, tools, and services — through one common interface, instead of a custom integration for every pair.
+
+Read it. Then let it go. I don't want you to hold onto it yet, because right now it is just a sentence, and sentences like that are easy to nod along to and impossible to actually use. Come back to it after chapter five and it will mean something quite different than it does today.
+
+We are going to build the idea from the bottom. Two programs talking. Then what an interface between them is. Then REST, which is how the industry agreed to write those interfaces down. And then the interesting part — what a model needs that REST was never designed to give it.
+
+By the end, every clause in that definition will be something you know the reason for.

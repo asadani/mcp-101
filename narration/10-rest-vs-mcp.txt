@@ -1,0 +1,27 @@
+Chapter ten. REST versus MCP.
+
+They are not competitors, and the comparison is slightly unfair. But it is the fastest way to see what is actually new here, so let's be unfair for a few minutes.
+
+There is a full table beside this. I will walk the rows that matter.
+
+Who it is written for. REST is written for a developer reading documentation, months ahead of runtime. MCP is written for a model choosing an action mid-conversation. Everything else follows from that one difference.
+
+Discovery. In REST it is out of band — docs, an OpenAPI file, tribal knowledge. In MCP it is in band. The tools list request, at connect time, plus notifications when the list changes while you are connected.
+
+Descriptions. In REST, a description is optional prose for humans. In MCP it is load-bearing. The description is how the model decides. That is not a nice-to-have field; it is the mechanism.
+
+Direction. In REST, the client asks and the server answers. Always. In MCP it is symmetric — the server can ask the client for a completion, or for user input.
+
+State. REST is stateless by design. MCP is a negotiated session, with capabilities and a lifecycle.
+
+Errors. In REST an error is a status code for a programmer to branch on. In MCP it is text the model will read and try to act on. Errors are instructions. That reframing is worth more than it sounds, and chapter twelve does something with it.
+
+And then the last row, which is the real difference, and the one people get wrong.
+
+Granularity. REST is resource-shaped. Slash orders. Slash orders slash forty-two. Nouns, addressed. MCP is task-shaped. Refund order. Diagnose failed build. Jobs, named.
+
+Here is why that matters practically. If you mirror a REST API into MCP one-to-one — an endpoint becomes a tool, mechanically, all the way down — you get a server that is technically correct, that passes every test you write for it, and that models use badly.
+
+Technically correct and used badly. That combination is the most common failure in this ecosystem, and it does not show up in your test suite.
+
+Which is the entire subject of the next chapter but one.

@@ -1,0 +1,23 @@
+Chapter three. Why REST alone doesn't help a model.
+
+REST assumes a human read the docs first. A model has no "first". It meets your system at runtime, mid-sentence, with no chance to study.
+
+So let's run the experiment. You point a model at a REST API and say, go on then. Four things break, and they break immediately.
+
+One. It can't discover anything. There is no standard question that means "what can you do?". You cannot GET the root of an API and receive a machine-readable menu of everything available. Now, OpenAPI specifications exist — but they are optional, they are frequently stale, they are often enormous, and crucially they are structured for code generators. Not for a reader deciding what to do next.
+
+Two. Nothing explains when to use a call. A spec will tell you that POST slash refunds takes an order I.D. It will not tell you: use this only after the customer has confirmed, and never for orders more than ninety days old. That knowledge exists. It is in a wiki. Or in someone's head. Or in the tribal memory of a team. It is nowhere the machine can reach.
+
+Three. It can't execute anything. A model emits text. That is chapter zero again. It has no HTTP client, no socket, no way to actually make the call. Something else has to do it — and REST says absolutely nothing about who that is, or how.
+
+Four. Auth is a free-for-all. Bearer tokens. API keys in headers. Keys in query strings. HMAC signatures. OAuth in about four different flavours. Every single API is a fresh puzzle for whoever writes the integration.
+
+Now let me put the gap precisely, because the precision is the point.
+
+REST standardises how to phrase a call you already know about. What a model needs is a standard for finding out what calls exist, understanding when to use them, and having them run on its behalf — all at runtime, with no prior study.
+
+Those are two different jobs. Genuinely different.
+
+Which is why — and please hold onto this, because it is the most common misreading of the whole topic — MCP does not replace REST. It isn't a competitor. It isn't a successor. A great many MCP servers are thin layers sitting directly on top of a REST API that is doing all the actual work underneath.
+
+MCP adds the layer REST never had. That is the claim. Everything from here is working out what that layer has to contain.
