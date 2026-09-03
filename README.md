@@ -4,7 +4,7 @@ An interactive tutorial on the Model Context Protocol. Eighteen chapters on
 one page, with the protocol's moving parts as things you step through rather
 than diagrams you look at.
 
-**▶ [Start the tutorial](https://asadani.github.io/mcp-101/)**
+**▶ [Start the tutorial](https://tech.anujsadani.in/mcp-101/)**
 
 No build, no install, no server. One HTML file that also runs from `file://`
 if you clone it.
@@ -66,8 +66,8 @@ About two hours of reading, or 45 minutes if you listen.
 The whole course is narrated, and the player is built into the page. There are
 two recordings of it:
 
-- **[index.html](https://asadani.github.io/mcp-101/)** — narrated by Kokoro-82M, 45.5 minutes
-- **[my-voice.html](https://asadani.github.io/mcp-101/my-voice.html)** — the same course in a clone of my own voice, 50.3 minutes
+- **[index.html](https://tech.anujsadani.in/mcp-101/)** — narrated by Kokoro-82M, 45.5 minutes
+- **[my-voice.html](https://tech.anujsadani.in/mcp-101/my-voice.html)** — the same course in a clone of my own voice, 50.3 minutes
 
 Both are rendered offline from the scripts in `narration/`. Nothing is
 streamed from anywhere and no account is involved.
