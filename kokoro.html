@@ -311,9 +311,30 @@ details.acc p{margin:10px 0 0;max-width:64ch;color:var(--ink-2)}
   *{transition:none!important;animation:none!important}
   html{scroll-behavior:auto}
 }
+
+/* Site header. Every reader-facing page needs a way back to the index: this
+   page is served from tech.anujsadani.in/mcp-101/ and people arrive on it
+   from search and shared links, not only from the site. Absolute URLs so it
+   also works when the file is opened from disk. */
+.sitebar{display:flex;align-items:center;justify-content:space-between;gap:16px;
+ padding:10px 22px;border-bottom:1px solid var(--rule);background:var(--paper-2);
+ font-size:13px;position:sticky;top:0;z-index:50}
+.sitebar a{text-decoration:none;color:var(--ink-2)}
+.sitebar .brand{color:var(--ink);font-weight:600}
+.sitebar .right{display:flex;gap:16px;align-items:center}
+.sitebar a:hover{color:var(--ink)}
+@media print{.sitebar{display:none}}
 </style>
 </head>
 <body>
+<nav class="sitebar" aria-label="Site">
+  <a class="brand" href="https://tech.anujsadani.in/">Anuj Sadani | Tech</a>
+  <span class="right">
+    <a href="https://github.com/asadani/mcp-101" target="_blank" rel="noopener">Source &nearr;</a>
+    <a href="https://tech.anujsadani.in/">&larr; index</a>
+  </span>
+</nav>
+
 <div class="frame">
 
 <header class="masthead">
